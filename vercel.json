@@ -1,5 +1,7 @@
 {
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/supabase" }
-  ]
+  "functions": {
+    "api/supabase.js": {
+      "maxDuration": 30
+    }
+  }
 }
