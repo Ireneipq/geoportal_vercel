@@ -232,19 +232,11 @@ doc.autoTable({
 head: headers, body,
 startY: 35,
 theme: 'grid',
-headStyles: { fillColor: [15, 43, 61], textColor: 255, fontStyle: 'bold', fontSize: 8 },
-bodyStyles: { fontSize: 7 },
-columnStyles: {
-0: { cellWidth: 8 },
-1: { cellWidth: 18 },
-2: { cellWidth: 18 },
-3: { cellWidth: 18 },
-4: { cellWidth: 10 },
-5: { cellWidth: 55 },
-6: { cellWidth: 70 },
-7: { cellWidth: 35 }
-},
-margin: { top: 35, right: 10, bottom: 15, left: 10 }
+headStyles: { fillColor: [15, 43, 61], textColor: 255, fontStyle: 'bold', fontSize: 7 },
+bodyStyles: { fontSize: 6.5 },
+margin: { top: 35, right: 8, bottom: 15, left: 8 },
+tableWidth: 'auto',
+styles: { cellPadding: 1.5 }
 });
 
 doc.save('encuesta_arbolado.pdf');
