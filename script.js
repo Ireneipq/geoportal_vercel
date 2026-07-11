@@ -190,3 +190,68 @@ updateStats();
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+async function generarPDF() {
+const btn = document.activeElement;
+const original = btn.innerHTML;
+btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+btn.disabled = true;
+try {
+const res = await fetch('/api/supabase?tabla=encuesta_arbolado');
+if (!res.ok) throw new Error('Error al obtener datos');
+const datos = await res.json();
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+
+doc.setFontSize(18);
+doc.setTextColor(15, 43, 61);
+doc.text('Encuesta de Arborizado', 14, 18);
+doc.setFontSize(10);
+doc.setTextColor(107, 114, 128);
+doc.text(`Inventario Arbóreo – Puerto Ayora – Santa Cruz`, 14, 25);
+doc.text(`Generado: ${new Date().toLocaleString('es-EC')}  |  Total respuestas: ${datos.length}`, 14, 30.5);
+
+const etiquetaProblemas = {
+problema_raices: 'Raíces', problema_ramas: 'Ramas secas', problema_cables: 'Cables',
+problema_veredas: 'Veredas', problema_seguridad: 'Seguridad', problema_altura: 'Altura'
+};
+
+const headers = [['#', 'Fecha', 'Lat', 'Lon', 'Val.', 'Problemas', 'Comentario', 'Nombre']];
+const body = datos.map((r, i) => {
+const problemas = Object.entries(etiquetaProblemas).filter(([k]) => r[k]).map(([,v]) => v).join(', ') || '—';
+const fecha = r.created_at ? new Date(r.created_at).toLocaleDateString('es-EC') : '—';
+return [
+i + 1, fecha,
+r.lat?.toFixed(4) || '—', r.lon?.toFixed(4) || '—',
+r.valoracion || '—', problemas,
+r.comentario || '—', r.nombre || '—'
+];
+});
+
+doc.autoTable({
+head: headers, body,
+startY: 35,
+theme: 'grid',
+headStyles: { fillColor: [15, 43, 61], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+bodyStyles: { fontSize: 7 },
+columnStyles: {
+0: { cellWidth: 8 },
+1: { cellWidth: 18 },
+2: { cellWidth: 18 },
+3: { cellWidth: 18 },
+4: { cellWidth: 10 },
+5: { cellWidth: 55 },
+6: { cellWidth: 70 },
+7: { cellWidth: 35 }
+},
+margin: { top: 35, right: 10, bottom: 15, left: 10 }
+});
+
+doc.save('encuesta_arbolado.pdf');
+} catch (err) {
+alert('Error al generar PDF: ' + err.message);
+console.error(err);
+}
+btn.innerHTML = original;
+btn.disabled = false;
+}
