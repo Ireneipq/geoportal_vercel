@@ -71,7 +71,7 @@
 <div class="toast" id="toast"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const map = L.map('map', { zoomControl: true, zoom: 13, center: [-0.432, -90.283] });
+const map = L.map('map', { zoomControl: true, zoom: 14, center: [-0.7432, -90.3038] });
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: '&copy; <a href="https://esri.com">Esri</a>', maxZoom: 19 }).addTo(map);
 const marker = L.marker([0, 0], { draggable: true }).addTo(map);
 marker.setLatLng([0, 0]);

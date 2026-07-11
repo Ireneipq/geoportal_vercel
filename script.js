@@ -23,7 +23,7 @@ thumbnail:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1
 }
 };
 
-const map = L.map('map', { zoomControl: true, zoom: 13, center: [-2.15, -79.9] });
+const map = L.map('map', { zoomControl: true, zoom: 14, center: [-0.7432, -90.3038] });
 
 let currentBasemap = 'satellite';
 const tileLayers = {};
