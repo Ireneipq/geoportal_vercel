@@ -18,15 +18,18 @@ module.exports = async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const rows = [];
+      const pageSize = 1000;
       let from = 0;
-      const limit = 1000;
-      while (true) {
-        const url = `${supabaseUrl}/rest/v1/${tabla}?select=*&limit=${limit}&offset=${from}`;
+      const maxPages = 30;
+
+      for (let page = 0; page < maxPages; page++) {
+        const to = from + pageSize - 1;
+        const url = `${supabaseUrl}/rest/v1/${tabla}?select=*`;
         const response = await fetch(url, {
           headers: {
             apikey: supabaseKey,
             Authorization: `Bearer ${supabaseKey}`,
-            Range: `${from}-${from + limit - 1}`,
+            Range: `${from}-${to}`,
             Prefer: 'count=exact'
           }
         });
@@ -35,9 +38,15 @@ module.exports = async function handler(req, res) {
           return res.status(response.status).json({ error: `Error ${response.status} en ${tabla}: ${txt}` });
         }
         const data = await response.json();
+        if (!data || data.length === 0) break;
+        if (page > 0 && data.length === pageSize) {
+          const lastBatch = rows.slice(-pageSize);
+          const same = lastBatch.length > 0 && JSON.stringify(lastBatch) === JSON.stringify(data);
+          if (same) break;
+        }
         rows.push(...data);
-        if (data.length < limit) break;
-        from += limit;
+        if (data.length < pageSize) break;
+        from += pageSize;
       }
       return res.json(rows);
     }
