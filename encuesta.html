@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta – Árboles y Áreas Verdes</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+<h1><span class="icon"><i class="fas fa-tree" style="font-size:14px"></i></span> Encuesta de Arborizado</h1>
+<a class="back" href="index.html"><i class="fas fa-arrow-left"></i> Volver al mapa</a>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<div class="sidebar-scroll">
+<form id="surveyForm" onsubmit="return handleSubmit(event)">
+<div class="form-section">
+<div class="section-title">Ubicación</div>
+<div class="form-group"><label>Latitud</label><input type="number" step="any" id="lat" placeholder="-0.1234" required></div>
+<div class="form-group"><label>Longitud</label><input type="number" step="any" id="lon" placeholder="-90.1234" required></div>
+<div class="hint" style="margin-top:-4px">Haz clic en el mapa para capturar coordenadas</div>
+</div>
+<div class="form-section">
+<div class="section-title">Problemáticas observadas</div>
+<div class="checkbox-grid" id="problemasGrid">
+<label class="checkbox-item"><input type="checkbox" name="problemas" value="raices"><span class="checkmark"></span>Raíces levantadas</label>
+<label class="checkbox-item"><input type="checkbox" name="problemas" value="ramas"><span class="checkmark"></span>Ramas secas</label>
+<label class="checkbox-item"><input type="checkbox" name="problemas" value="cables"><span class="checkmark"></span>Interfiere con cables</label>
+<label class="checkbox-item"><input type="checkbox" name="problemas" value="veredas"><span class="checkmark"></span>Daño en veredas</label>
+<label class="checkbox-item"><input type="checkbox" name="problemas" value="seguridad"><span class="checkmark"></span>Inseguridad/oscurece</label>
+<label class="checkbox-item"><input type="checkbox" name="problemas" value="altura"><span class="checkmark"></span>Altura excesiva</label>
+</div>
+<div class="form-group"><label>Otros problemas</label><input type="text" id="problemas_otro" placeholder="Describe otro problema..."></div>
+</div>
+<div class="form-section">
+<div class="section-title">Valoración</div>
+<div class="form-group">
+<label>¿Cómo calificas el arbolado en este punto?</label>
+<div class="rating-group" id="ratingGroup">
+<div class="rating-btn" data-val="1">1</div>
+<div class="rating-btn" data-val="2">2</div>
+<div class="rating-btn active" data-val="3">3</div>
+<div class="rating-btn" data-val="4">4</div>
+<div class="rating-btn" data-val="5">5</div>
+</div>
+<div class="hint" id="ratingLabel">Regular</div>
+</div>
+</div>
+<div class="form-section">
+<div class="section-title">Comentario</div>
+<div class="form-group"><label>Cuéntanos más</label><textarea id="comentario" placeholder="Describe la situación del árbol o área verde..."></textarea></div>
+</div>
+<div class="form-section">
+<div class="section-title">Tu nombre (opcional)</div>
+<div class="form-group"><label>Nombre</label><input type="text" id="nombre" placeholder="Tu nombre"></div>
+</div>
+<button type="submit" class="btn-submit" id="btnSubmit"><i class="fas fa-paper-plane"></i> Enviar encuesta</button>
+<div style="margin-top:auto;padding-top:16px;text-align:center;font-size:0.72rem;color:var(--text-secondary);border-top:1px solid var(--border)">UTPL 2026 &middot; Especialidad SIG</div>
+</form>
+</div>
+</aside>
+<main class="map-area">
+<div id="map"></div>
+<div class="marker-label" id="markerLabel"><i class="fas fa-map-pin" style="color:var(--accent)"></i><span id="coordDisplay">Selecciona un punto en el mapa</span></div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map = L.map('map', { zoomControl: true, zoom: 13, center: [-0.432, -90.283] });
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: '&copy; <a href="https://esri.com">Esri</a>', maxZoom: 19 }).addTo(map);
+const marker = L.marker([0, 0], { draggable: true }).addTo(map);
+marker.setLatLng([0, 0]);
+
+function showToast(msg, type) {
+const t = document.getElementById('toast');
+t.textContent = msg; t.className = 'toast ' + type;
+setTimeout(() => t.classList.add('show'), 10);
+setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+const ratingLabels = ['', 'Muy malo', 'Malo', 'Regular', 'Bueno', 'Excelente'];
+document.querySelectorAll('.rating-btn').forEach(btn => {
+btn.addEventListener('click', () => {
+document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+document.getElementById('ratingLabel').textContent = ratingLabels[parseInt(btn.dataset.val)];
+});
+});
+document.querySelectorAll('.checkbox-item input').forEach(cb => {
+cb.addEventListener('change', () => cb.closest('.checkbox-item').classList.toggle('checked', cb.checked));
+});
+
+function updateCoordDisplay(lat, lon) {
+document.getElementById('lat').value = lat.toFixed(6);
+document.getElementById('lon').value = lon.toFixed(6);
+document.getElementById('coordDisplay').textContent = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
+document.getElementById('markerLabel').classList.add('visible');
+}
+map.on('click', e => { marker.setLatLng(e.latlng); updateCoordDisplay(e.latlng.lat, e.latlng.lng); });
+marker.on('dragend', () => { const p = marker.getLatLng(); updateCoordDisplay(p.lat, p.lng); });
+document.getElementById('lat').addEventListener('input', syncFromInput);
+document.getElementById('lon').addEventListener('input', syncFromInput);
+function syncFromInput() {
+const lat = parseFloat(document.getElementById('lat').value);
+const lon = parseFloat(document.getElementById('lon').value);
+if (!isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+marker.setLatLng([lat, lon]); map.setView([lat, lon], map.getZoom());
+document.getElementById('coordDisplay').textContent = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
+document.getElementById('markerLabel').classList.add('visible');
+}
+}
+
+async function handleSubmit(e) {
+e.preventDefault();
+const btn = document.getElementById('btnSubmit');
+btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+const lat = parseFloat(document.getElementById('lat').value);
+const lon = parseFloat(document.getElementById('lon').value);
+if (isNaN(lat) || isNaN(lon)) { showToast('Ubicación inválida', 'error'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar encuesta'; return false; }
+const checks = document.querySelectorAll('input[name="problemas"]:checked');
+const problemas = {};
+['raices','ramas','cables','veredas','seguridad','altura'].forEach(p => { problemas['problema_' + p] = false; });
+checks.forEach(cb => { problemas['problema_' + cb.value] = true; });
+const rating = parseInt(document.querySelector('.rating-btn.active').dataset.val);
+const body = { lat, lon, problema_raices: problemas.problema_raices, problema_ramas: problemas.problema_ramas, problema_cables: problemas.problema_cables, problema_veredas: problemas.problema_veredas, problema_seguridad: problemas.problema_seguridad, problema_altura: problemas.problema_altura, problema_otros: document.getElementById('problemas_otro').value || null, valoracion: rating, comentario: document.getElementById('comentario').value || null, nombre: document.getElementById('nombre').value || null };
+try {
+const res = await fetch('/api/supabase?tabla=encuesta_arbolado', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+if (!res.ok) throw new Error('Error al enviar');
+showToast('Encuesta enviada correctamente. ¡Gracias!', 'success');
+document.getElementById('surveyForm').reset();
+marker.setLatLng([0, 0]);
+document.getElementById('markerLabel').classList.remove('visible');
+document.querySelectorAll('.checkbox-item').forEach(el => el.classList.remove('checked'));
+document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
+document.querySelector('.rating-btn[data-val="3"]').classList.add('active');
+document.getElementById('ratingLabel').textContent = 'Regular';
+} catch (err) { showToast('Error al enviar. Intenta de nuevo.', 'error'); console.error(err); }
+btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar encuesta';
+return false;
+}
+</script>
+</body>
+</html>
