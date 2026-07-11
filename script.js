@@ -54,18 +54,9 @@ const layerMap = {};
 const featureCounts = {};
 
 async function fetchAllRows(tabla) {
-const rows = [];
-let from = 0;
-const limit = 1000;
-while (true) {
-const res = await fetch(`/api/supabase?tabla=${tabla}&limit=${limit}&offset=${from}`);
+const res = await fetch(`/api/supabase?tabla=${tabla}`);
 if (!res.ok) throw new Error(`Error ${res.status} en ${tabla}`);
-const data = await res.json();
-rows.push(...data);
-if (data.length < limit) break;
-from += limit;
-}
-return rows;
+return await res.json();
 }
 
 function buildPopup(feature, cfg) {
