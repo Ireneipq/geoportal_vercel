@@ -1,5 +1,16 @@
 # Changelog - Geoportal Inventario Arboreo
 
+## 2026-07-12
+
+### Cambio: Reposicionar mapas base y renombrar
+- **Archivos afectados:** `index.html`, `script.js`
+- **Motivo:** El selector de mapas base estaba en la parte superior del sidebar; se movio debajo de "Participa" (junto al footer). Se renombraron para coincidir con convencion Google Maps.
+- **Antes:** Seccion "Mapa base" arriba del sidebar. Nombres: "Calles" / "Satelite".
+- **Ahora:** Seccion "Mapa base" al fondo del sidebar. Nombres: "Estandar" / "Satelital".
+- **Detalle:** La key interna `satellite` se conservo para mantener compatibilidad con el codigo existente; solo cambio la propiedad `name` display.
+
+---
+
 ## 2026-07-11
 
 ### Cambio: Coordenadas del area de estudio
