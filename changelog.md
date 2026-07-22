@@ -2,6 +2,13 @@
 
 ## 2026-07-12
 
+### Cambio: Thumbnails de mapas base con imágenes reales
+- **Archivos afectados:** `script.js`, `styles.css`
+- **Motivo:** Los thumbnails eran SVGs grises abstractos, poco estéticos. Se reemplazaron por tiles reales de cada proveedor (OSM/Esri) en zoom 5, centrados en Puerto Ayora, estilo Google Maps.
+- **Antes:** `thumbnail: data:image/svg+xml,...` (SVG genérico)
+- **Ahora:** `thumbnail: https://tile.openstreetmap.org/5/5/5.png` / `https://server.arcgisonline.com/.../tile/5/5/5`
+- **CSS:** Se agregó `background:#e5e7eb` como fallback mientras carga la imagen.
+
 ### Cambio: Reposicionar mapas base y renombrar
 - **Archivos afectados:** `index.html`, `script.js`
 - **Motivo:** El selector de mapas base estaba en la parte superior del sidebar; se movio debajo de "Participa" (junto al footer). Se renombraron para coincidir con convencion Google Maps.

@@ -13,13 +13,13 @@ standard: {
 name:'Estándar',
 url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 attribution:'&copy; <a href="https://openstreetmap.org/copyright">OSM</a>',
-thumbnail:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="100" viewBox="0 0 160 100"%3E%3Crect fill="%23f5f0e1" width="160" height="100"/%3E%3Crect fill="%23e8e0c8" x="20" y="10" width="8" height="80" rx="1"/%3E%3Crect fill="%23e8e0c8" x="130" y="10" width="8" height="80" rx="1"/%3E%3Crect fill="%23e8e0c8" x="30" y="45" width="100" height="6" rx="1"/%3E%3Crect fill="%23d4c9a0" x="40" y="20" width="15" height="15" rx="2"/%3E%3Crect fill="%23d4c9a0" x="80" y="55" width="20" height="15" rx="2"/%3E%3Ccircle fill="%234ade80" cx="50" cy="52" r="4"/%3E%3Ccircle fill="%234ade80" cx="95" cy="38" r="4"/%3E%3Cpath fill="%23e65100" d="M60 70h5v5h-5zM70 70h5v5h-5zM80 70h5v5h-5z" opacity=".6"/%3E%3C/svg%3E'
+thumbnail:'https://tile.openstreetmap.org/5/5/5.png'
 },
 satellite: {
 name:'Satelital',
 url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 attribution:'&copy; <a href="https://esri.com">Esri</a>',
-thumbnail:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="100" viewBox="0 0 160 100"%3E%3Crect fill="%23263b4a" width="160" height="100"/%3E%3Crect fill="%233a5a6f" x="10" y="5" width="30" height="30" rx="4" opacity=".5"/%3E%3Crect fill="%233a5a6f" x="70" y="40" width="40" height="25" rx="4" opacity=".5"/%3E%3Crect fill="%233a5a6f" x="110" y="65" width="35" height="20" rx="4" opacity=".4"/%3E%3Ccircle fill="%234ade80" cx="45" cy="48" r="3"/%3E%3Ccircle fill="%234ade80" cx="90" cy="32" r="3"/%3E%3Cpath fill="%23e65100" d="M55 68h4v4h-4zM64 68h4v4h-4zM73 68h4v4h-4z" opacity=".5"/%3E%3C/svg%3E'
+thumbnail:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/5/5'
 }
 };
 
