@@ -187,7 +187,7 @@ for (const cfg of CONFIG) {
 const checked = cfg.visible !== false;
 const div = document.createElement('div');
 div.className = 'layer-item';
-div.innerHTML = `<div class="color-dot" style="background:${cfg.color}"></div><div class="info"><span class="name">${cfg.nombre}</span></div><label class="switch"><input type="checkbox" id="chk-${cfg.id}" ${checked?'checked':''} onchange="toggleLayer('${cfg.id}')"><span class="track"></span></label>`;
+div.innerHTML = `<div class="info"><span class="name">${cfg.nombre}</span></div><label class="switch"><input type="checkbox" id="chk-${cfg.id}" ${checked?'checked':''} onchange="toggleLayer('${cfg.id}')"><span class="track"></span></label>`;
 container.appendChild(div);
 }
 }
