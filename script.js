@@ -151,7 +151,7 @@ if (cfg.id === 'encuestas') {
 return L.marker(latlng, { icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="font-size:22px;color:#d4a017;text-shadow:0 1px 3px rgba(0,0,0,.4)"></i>', iconSize: [22, 22], iconAnchor: [11, 22], popupAnchor: [0, -22] }) });
 }
 if (cfg.id === 'arboles') {
-return L.marker(latlng, { icon: L.divIcon({ className: '', html: '<svg width="12" height="14" viewBox="0 0 12 14"><polygon points="6,0 12,14 0,14" fill="#2e7d32" stroke="#fff" stroke-width="1.2"/></svg>', iconSize: [12, 14], iconAnchor: [6, 14], popupAnchor: [0, -14] }) });
+return L.marker(latlng, { icon: L.divIcon({ className: '', html: '<svg width="12" height="14" viewBox="0 0 12 14"><polygon points="6,0 12,14 0,14" fill="#2e7d32"/></svg>', iconSize: [12, 14], iconAnchor: [6, 14], popupAnchor: [0, -14] }) });
 }
 return L.circleMarker(latlng, { radius: 5, fillColor: cfg.color, color: '#fff', weight: 1.5, fillOpacity: 0.85 });
 },
