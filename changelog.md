@@ -37,7 +37,7 @@
 ### Capa Equipamientos - Colores por tipo (tonos pastel)
 - **Archivos:** `script.js`
 - Cada valor del campo `equip` se muestra con un color pastel diferente
-- Paleta: Escuelas(rosa), Salud(verde), Religioso(azul), Comercial(amarillo), Parques(morado), Deportivo(naranja), Cultural(turquesa), etc.
+- Paleta: INSTITUCIONAL(rosa), SERVICIO(celeste), EDUCATIVO(azul), FINANCIERO(amarillo), SEGURIDAD(naranja), SANITARIO/CULTO(verde/morado), ADMINISTRATIVO(azul oscuro), SALUD(verde), RECREATIVO(rosa claro), TURISTICO(turquesa), MERCADO(naranja claro), CAMAL(rosa pálido), CENTRO AGRICOLA(verde pálido)
 - `fillOpacity: 0.7`, borde del mismo color
 - Diagnóstico: log de tipos únicos de `equip` en consola
 - Leyenda: desglosa cada tipo con su color cuando Equipamientos está activa
