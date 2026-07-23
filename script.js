@@ -1,5 +1,5 @@
 const CONFIG = [
-{ id:'arboles', nombre:'Árboles', tabla:'arboles_wgs84', color:'#2e7d32', campos:['codigo','familia','genero','especie','n_comun'] },
+{ id:'arboles', nombre:'Árboles', tabla:'arboles_wgs84', color:'#2e7d32', campos:[{f:'codigo',l:'Código'},{f:'familia',l:'Familia'},{f:'genero',l:'Género'},{f:'especie',l:'Especie',i:true},{f:'n_comun',l:'Nombre común'}] },
 { id:'vias', nombre:'Vías', tabla:'vias_WGS84', color:'#1565c0', campos:[{f:'dpa_nombre_1',l:'Nombre'},{f:'tipo_de_ro',l:'Tipo de rodadura'},{f:'Ciclovia',l:'Ciclovía'},{f:'sentido',l:'Sentido'}] },
 { id:'equipamientos', nombre:'Equipamientos', tabla:'equipamientos_wgs84', color:'#e65100', campos:[{f:'uso_real',l:'Uso real'},{f:'equip',l:'Equip'},{f:'barrio',l:'Barrio'}] },
 { id:'predios', nombre:'Predios', tabla:'predios_wgs84', color:'#6a1b9a', campos:['clave'] },
@@ -65,8 +65,10 @@ let html = `<div class="popup-header">${cfg.nombre}</div><div class="popup-body"
 for (const campo of cfg.campos) {
 const field = typeof campo === 'string' ? campo : campo.f;
 const label = typeof campo === 'string' ? campo.charAt(0).toUpperCase() + campo.slice(1) : campo.l;
+const italic = typeof campo === 'object' && campo.i;
 let v = props[field];
 if (v === null || v === undefined || v === '') v = '—';
+if (italic) v = `<em>${v}</em>`;
 html += `<tr><td>${label}</td><td>${v}</td></tr>`;
 }
 html += '</table></div>';

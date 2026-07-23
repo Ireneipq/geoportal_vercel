@@ -2,6 +2,13 @@
 
 ## 2026-07-12
 
+### Cambio: Popup capa Árboles - Labels y cursiva en especie
+- **Archivos afectados:** `script.js`
+- **Motivo:** El campo `n_comun` se mostraba sin formato legible; la especie (nombre científico) debía ir en cursiva según convención taxonómica.
+- **Cambios en CONFIG:** `campos` migrados de strings a objetos `{f, l, i}` con labels legibles. Campo `especie` tiene flag `i:true` para cursiva.
+- **Cambios en buildPopup:** Soporte para flag `i` que envuelve el valor en `<em>`.
+- **Labels nuevos:** Código, Familia, Género, Especie (cursiva), Nombre común.
+
 ### Cambio: Thumbnails de mapas base con imágenes reales
 - **Archivos afectados:** `script.js`, `styles.css`
 - **Motivo:** Los thumbnails eran SVGs grises abstractos, poco estéticos. Se reemplazaron por tiles reales de cada proveedor (OSM/Esri) en zoom 5, centrados en Puerto Ayora, estilo Google Maps.
