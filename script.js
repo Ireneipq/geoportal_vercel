@@ -48,10 +48,19 @@ let html = '<div class="legend-title">Leyenda</div>';
 for (const cfg of CONFIG) {
 const chk = document.getElementById('chk-' + cfg.id);
 if (chk && chk.checked) {
+if (cfg.id === 'equipamientos' && layerMap['equipamientos']) {
+const tipos = new Set();
+layerMap['equipamientos'].eachLayer(l => { if (l.feature && l.feature.properties.equip) tipos.add(l.feature.properties.equip); });
+tipos.forEach(t => {
+const c = EQUIP_COLORS[t] || EQUIP_DEFAULT;
+html += `<div class="legend-item"><span class="legend-dot" style="background:${c}"></span><span>${t}</span></div>`;
+});
+} else {
 let icon = `<span class="legend-dot" style="background:${cfg.color}"></span>`;
 if (cfg.id === 'vias') icon = `<svg width="20" height="14" style="vertical-align:middle"><line x1="0" y1="7" x2="20" y2="7" stroke="${cfg.color}" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`;
 if (cfg.id === 'encuestas') icon = '<i class="fas fa-location-dot" style="font-size:14px;color:#d4a017"></i>';
 html += `<div class="legend-item">${icon}<span>${cfg.nombre}</span></div>`;
+}
 }
 }
 legendDiv.innerHTML = html;
@@ -60,6 +69,12 @@ legendDiv.innerHTML = html;
 initBasemapUI();
 initLayerUI();
 
+const EQUIP_COLORS = {
+'Escuelas':'#FFB3BA','Salud':'#BAFFC9','Religioso':'#BAE1FF','Comercial':'#FFFFBA',
+'Parques':'#E8BAFF','Deportivo':'#FFD4BA','Cultural':'#BAFFEF','Educacion':'#FFD1DC',
+'Administracion':'#D4BAFF','Servicios':'#BAF0FF','Recreacion':'#FFE4BA','Otros':'#D4D4D4'
+};
+const EQUIP_DEFAULT = '#D4D4D4';
 const layerMap = {};
 const featureCounts = {};
 
@@ -89,6 +104,10 @@ async function loadLayer(cfg) {
 const data = await fetchAllRows(cfg.tabla);
 if (data.length > 0) {
 console.log(`[${cfg.nombre}] Campos disponibles:`, Object.keys(data[0]).join(', '));
+if (cfg.id === 'equipamientos') {
+const unicos = [...new Set(data.map(r => r.equip).filter(Boolean))];
+console.log(`[Equipamientos] Tipos únicos (equip):`, unicos);
+}
 }
 const features = [];
 let skipped = 0;
@@ -122,7 +141,11 @@ console.warn(`[${cfg.nombre}] Primera fila (sin geom detectada):`, JSON.stringif
 }
 if (features.length === 0) return null;
 const geoLayer = L.geoJSON({ type:'FeatureCollection', features }, {
-style: { color: cfg.color, weight: cfg.id === 'vias' ? 1.5 : 2, fillOpacity: cfg.id === 'vias' ? 0 : 0.25, opacity: cfg.id === 'vias' ? 0.9 : 0.8, dashArray: cfg.id === 'vias' ? '8, 6' : undefined },
+style: function(feature) {
+const isEquip = cfg.id === 'equipamientos';
+const fillColor = isEquip ? (EQUIP_COLORS[feature.properties.equip] || EQUIP_DEFAULT) : cfg.color;
+return { color: fillColor, weight: cfg.id === 'vias' ? 1.5 : 2, fillColor: fillColor, fillOpacity: isEquip ? 0.7 : (cfg.id === 'vias' ? 0 : 0.25), opacity: isEquip ? 0.9 : (cfg.id === 'vias' ? 0.9 : 0.8), dashArray: cfg.id === 'vias' ? '8, 6' : undefined };
+},
 pointToLayer: (feature, latlng) => {
 if (cfg.id === 'encuestas') {
 return L.marker(latlng, { icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="font-size:22px;color:#d4a017;text-shadow:0 1px 3px rgba(0,0,0,.4)"></i>', iconSize: [22, 22], iconAnchor: [11, 22], popupAnchor: [0, -22] }) });

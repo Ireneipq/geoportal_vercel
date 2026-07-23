@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit 22ea059 (leyenda dinámica + capas por defecto)
+## Estado actual: cambios no commiteados (equipamientos colores pastel)
 
 ---
 
@@ -33,6 +33,14 @@
 - La leyenda del mapa ahora se actualiza al activar/desactivar capas
 - Solo muestra los ítems de las capas que están activadas
 - Se actualiza en: carga inicial, toggle de capas
+
+### Capa Equipamientos - Colores por tipo (tonos pastel)
+- **Archivos:** `script.js`
+- Cada valor del campo `equip` se muestra con un color pastel diferente
+- Paleta: Escuelas(rosa), Salud(verde), Religioso(azul), Comercial(amarillo), Parques(morado), Deportivo(naranja), Cultural(turquesa), etc.
+- `fillOpacity: 0.7`, borde del mismo color
+- Diagnóstico: log de tipos únicos de `equip` en consola
+- Leyenda: desglosa cada tipo con su color cuando Equipamientos está activa
 
 ### Fix: silenciar warnings Leaflet deprecated
 - **Archivos:** `index.html`
