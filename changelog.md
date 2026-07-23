@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit d9e9230 — Todas las capas cargan correctamente
+## Estado actual: commit pendiente (capas por defecto: solo Árboles + Predios)
 
 ---
 
@@ -21,6 +21,12 @@
 - Leyenda: punto circular → segmento de línea SVG entrecortada
 - Orden CONFIG: movida al inicio para que cargue última en Leaflet (encima de todas las capas)
 - **Zoom mínimo:** solo visible a zoom ≥ 17 (escala ≈ 1:1.000). Se oculta automáticamente al alejar.
+
+### Capas por defecto al ingresar
+- **Archivos:** `script.js`
+- **Activas:** Árboles, Predios
+- **Desactivadas:** Vías, Equipamientos, Límites, Islas, Encuestas
+- El zoom inicial ajusta automáticamente a Árboles + Predios
 
 ### Fix: silenciar warnings Leaflet deprecated
 - **Archivos:** `index.html`
