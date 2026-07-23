@@ -34,19 +34,28 @@ tileLayers[key] = L.tileLayer(bm.url, { attribution: bm.attribution, maxZoom: 19
 tileLayers['satellite'].addTo(map);
 
 const legend = L.control({ position: 'bottomright' });
+let legendDiv = null;
 legend.onAdd = function() {
-const div = L.DomUtil.create('div', 'map-legend');
+legendDiv = L.DomUtil.create('div', 'map-legend');
+updateLegend();
+return legendDiv;
+};
+legend.addTo(map);
+
+function updateLegend() {
+if (!legendDiv) return;
 let html = '<div class="legend-title">Leyenda</div>';
 for (const cfg of CONFIG) {
+const chk = document.getElementById('chk-' + cfg.id);
+if (chk && chk.checked) {
 let icon = `<span class="legend-dot" style="background:${cfg.color}"></span>`;
-if (cfg.id === 'vias') icon = `<svg width="20" height="14" style="vertical-align:middle"><line x1="0" y1="7" x2="20" y2="7" stroke="${cfg.color}" stroke-width="3" stroke-dasharray="6,4"/></svg>`;
+if (cfg.id === 'vias') icon = `<svg width="20" height="14" style="vertical-align:middle"><line x1="0" y1="7" x2="20" y2="7" stroke="${cfg.color}" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`;
 if (cfg.id === 'encuestas') icon = '<i class="fas fa-location-dot" style="font-size:14px;color:#d4a017"></i>';
 html += `<div class="legend-item">${icon}<span>${cfg.nombre}</span></div>`;
 }
-div.innerHTML = html;
-return div;
-};
-legend.addTo(map);
+}
+legendDiv.innerHTML = html;
+}
 
 initBasemapUI();
 initLayerUI();
@@ -171,6 +180,7 @@ for (const cfg of loadOrder) { const ch = document.getElementById('chk-' + cfg.i
 if (layerMap[id]) map.removeLayer(layerMap[id]);
 }
 updateStats();
+updateLegend();
 }
 
 function updateStats() {
@@ -212,6 +222,7 @@ resultados.forEach(r => console.log('  ' + r));
 if (anyLayer && grupo.getLayers().length > 0) map.fitBounds(grupo.getBounds().pad(0.05));
 if (statusText) statusText.textContent = 'Listo';
 updateStats();
+updateLegend();
 if (layerMap['vias']) {
 const chkVias = document.getElementById('chk-vias');
 if (chkVias && chkVias.checked) {

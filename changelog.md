@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit pendiente (capas por defecto: solo Árboles + Predios)
+## Estado actual: cambios no commiteados (leyenda dinámica)
 
 ---
 
@@ -27,6 +27,12 @@
 - **Activas:** Árboles, Predios
 - **Desactivadas:** Vías, Equipamientos, Límites, Islas, Encuestas
 - El zoom inicial ajusta automáticamente a Árboles + Predios
+
+### Leyenda dinámica
+- **Archivos:** `script.js`
+- La leyenda del mapa ahora se actualiza al activar/desactivar capas
+- Solo muestra los ítems de las capas que están activadas
+- Se actualiza en: carga inicial, toggle de capas
 
 ### Fix: silenciar warnings Leaflet deprecated
 - **Archivos:** `index.html`
