@@ -20,7 +20,7 @@
 - Popup: solo campo `dpa_nombre_1` (Nombre)
 - Leyenda: punto circular → segmento de línea SVG entrecortada
 - Orden CONFIG: movida al inicio para que cargue última en Leaflet (encima de todas las capas)
-- **Zoom mínimo:** solo visible a zoom ≥ 18 (escala ≈ 1:500). Se oculta automáticamente al alejar.
+- **Zoom mínimo:** solo visible a zoom ≥ 17 (escala ≈ 1:1.000). Se oculta automáticamente al alejar.
 
 ### Fix: silenciar warnings Leaflet deprecated
 - **Archivos:** `index.html`

@@ -215,12 +215,12 @@ updateStats();
 if (layerMap['vias']) {
 const chkVias = document.getElementById('chk-vias');
 if (chkVias && chkVias.checked) {
-if (map.getZoom() < 18) map.removeLayer(layerMap['vias']);
+if (map.getZoom() < 17) map.removeLayer(layerMap['vias']);
 }
 map.on('zoomend', function() {
 const chk = document.getElementById('chk-vias');
 if (!chk || !chk.checked || !layerMap['vias']) return;
-if (map.getZoom() >= 18) {
+if (map.getZoom() >= 17) {
 if (!map.hasLayer(layerMap['vias'])) map.addLayer(layerMap['vias']);
 } else {
 if (map.hasLayer(layerMap['vias'])) map.removeLayer(layerMap['vias']);
