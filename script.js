@@ -51,7 +51,7 @@ if (chk && chk.checked) {
 if (cfg.id === 'equipamientos' && layerMap['equipamientos']) {
 const tipos = new Set();
 layerMap['equipamientos'].eachLayer(l => { if (l.feature && l.feature.properties.equip) tipos.add(l.feature.properties.equip); });
-tipos.forEach(t => {
+[...tipos].sort((a, b) => a.localeCompare(b, 'es')).forEach(t => {
 const c = EQUIP_COLORS[t] || EQUIP_DEFAULT;
 html += `<div class="legend-item"><span class="legend-dot" style="background:${c}"></span><span>${t}</span></div>`;
 });
