@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit ef4a22a (pendiente: RLS en Supabase)
+## Estado actual: cambios no commiteados (vías delgada + zoom mínimo 18)
 
 ---
 
@@ -13,13 +13,14 @@
 - Logs de diagnóstico en consola (F12): filas cargadas, geom válidas, sin geom.
 - Resumen de carga por capa al iniciar el geoportal.
 
-### Capa Vías - Estilo, popup y orden
+### Capa Vías - Estilo, popup, orden y zoom
 - **Archivos:** `script.js`
 - Color: `#1565c0` (azul) → `#ff6347` (tomate)
-- Línea: sólida → entrecortada (`dashArray: '8, 6'`)
+- Línea: sólida → entrecortada (`dashArray: '8, 6'`), peso 1.5 (delgada)
 - Popup: solo campo `dpa_nombre_1` (Nombre)
 - Leyenda: punto circular → segmento de línea SVG entrecortada
 - Orden CONFIG: movida al inicio para que cargue última en Leaflet (encima de todas las capas)
+- **Zoom mínimo:** solo visible a zoom ≥ 18 (escala ≈ 1:500). Se oculta automáticamente al alejar.
 
 ### Fix: silenciar warnings Leaflet deprecated
 - **Archivos:** `index.html`

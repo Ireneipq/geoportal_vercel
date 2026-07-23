@@ -113,7 +113,7 @@ console.warn(`[${cfg.nombre}] Primera fila (sin geom detectada):`, JSON.stringif
 }
 if (features.length === 0) return null;
 const geoLayer = L.geoJSON({ type:'FeatureCollection', features }, {
-style: { color: cfg.color, weight: cfg.id === 'vias' ? 3 : 2, fillOpacity: cfg.id === 'vias' ? 0 : 0.25, opacity: cfg.id === 'vias' ? 0.9 : 0.8, dashArray: cfg.id === 'vias' ? '8, 6' : undefined },
+style: { color: cfg.color, weight: cfg.id === 'vias' ? 1.5 : 2, fillOpacity: cfg.id === 'vias' ? 0 : 0.25, opacity: cfg.id === 'vias' ? 0.9 : 0.8, dashArray: cfg.id === 'vias' ? '8, 6' : undefined },
 pointToLayer: (feature, latlng) => {
 if (cfg.id === 'encuestas') {
 return L.marker(latlng, { icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="font-size:22px;color:#d4a017;text-shadow:0 1px 3px rgba(0,0,0,.4)"></i>', iconSize: [22, 22], iconAnchor: [11, 22], popupAnchor: [0, -22] }) });
@@ -212,6 +212,21 @@ resultados.forEach(r => console.log('  ' + r));
 if (anyLayer && grupo.getLayers().length > 0) map.fitBounds(grupo.getBounds().pad(0.05));
 if (statusText) statusText.textContent = 'Listo';
 updateStats();
+if (layerMap['vias']) {
+const chkVias = document.getElementById('chk-vias');
+if (chkVias && chkVias.checked) {
+if (map.getZoom() < 18) map.removeLayer(layerMap['vias']);
+}
+map.on('zoomend', function() {
+const chk = document.getElementById('chk-vias');
+if (!chk || !chk.checked || !layerMap['vias']) return;
+if (map.getZoom() >= 18) {
+if (!map.hasLayer(layerMap['vias'])) map.addLayer(layerMap['vias']);
+} else {
+if (map.hasLayer(layerMap['vias'])) map.removeLayer(layerMap['vias']);
+}
+});
+}
 }
 
 document.addEventListener('DOMContentLoaded', init);
