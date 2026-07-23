@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: cambios no commiteados (equipamientos colores pastel)
+## Estado actual: commit 3e6d477 (equipamientos colores pastel por tipo)
 
 ---
 
@@ -90,5 +90,5 @@
 
 ## Notas pendientes
 
-- **Completar:** Crear política RLS en Supabase para `vias_WGS84`, `predios_wgs84`, `limites_wgs84`, `islas_wgs84`.
 - No hay archivo `.env` local. Las credenciales de Supabase se configuran en Vercel.
+- Próximo paso pendiente: trabajar en la representación gráfica de cada especie de árbol con icono diferente según la especie.
