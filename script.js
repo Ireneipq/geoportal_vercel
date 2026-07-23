@@ -70,9 +70,10 @@ initBasemapUI();
 initLayerUI();
 
 const EQUIP_COLORS = {
-'Escuelas':'#FFB3BA','Salud':'#BAFFC9','Religioso':'#BAE1FF','Comercial':'#FFFFBA',
-'Parques':'#E8BAFF','Deportivo':'#FFD4BA','Cultural':'#BAFFEF','Educacion':'#FFD1DC',
-'Administracion':'#D4BAFF','Servicios':'#BAF0FF','Recreacion':'#FFE4BA','Otros':'#D4D4D4'
+'INSTITUCIONAL':'#FFB3BA','SERVICIO':'#BAF0FF','EDUCATIVO':'#BAE1FF','FINANCIERO':'#FFFFBA',
+'SEGURIDAD Y DEFENSA':'#FFD4BA','SANITARIO':'#BAFFC9','CULTO':'#E8BAFF','ADMINISTRATIVO':'#D4BAFF',
+'SALUD':'#BAFFC9','RECREATIVO':'#FFD1DC','TURISTICO':'#BAFFEF','MERCADO':'#FFE4BA',
+'CAMAL':'#F0D4D4','CENTRO AGRICOLA':'#D4F0D4'
 };
 const EQUIP_DEFAULT = '#D4D4D4';
 const layerMap = {};
