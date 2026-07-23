@@ -106,7 +106,7 @@ if (data.length > 0) {
 console.log(`[${cfg.nombre}] Campos disponibles:`, Object.keys(data[0]).join(', '));
 if (cfg.id === 'equipamientos') {
 const unicos = [...new Set(data.map(r => r.equip).filter(Boolean))];
-console.log(`[Equipamientos] Tipos únicos (equip):`, unicos);
+console.log(`[Equipamientos] Tipos únicos (equip):`, JSON.stringify(unicos));
 }
 }
 const features = [];
