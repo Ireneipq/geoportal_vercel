@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: cambios no commiteados (leyenda dinámica)
+## Estado actual: commit 22ea059 (leyenda dinámica + capas por defecto)
 
 ---
 
