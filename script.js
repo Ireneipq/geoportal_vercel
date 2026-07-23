@@ -1,7 +1,7 @@
 const CONFIG = [
 { id:'vias', nombre:'Vías', tabla:'vias_WGS84', color:'#ff6347', visible:false, campos:[{f:'dpa_nomb_1',l:'Nombre'}] },
 { id:'arboles', nombre:'Árboles', tabla:'arboles_wgs84', color:'#2e7d32', campos:[{f:'codigo',l:'Código'},{f:'familia',l:'Familia'},{f:'genero',l:'Género'},{f:'especie',l:'Especie',i:true},{f:'n_comun',l:'Nombre común'}] },
-{ id:'equipamientos', nombre:'Equipamientos', tabla:'equipamientos_wgs84', color:'#e65100', visible:false, campos:[{f:'uso_real',l:'Uso real'},{f:'equip',l:'Equip'},{f:'barrio',l:'Barrio'}] },
+{ id:'equipamientos', nombre:'Equipamientos', tabla:'equipamientos_wgs84', color:'#e65100', visible:false, campos:[{f:'uso_actual',l:'Uso actual'},{f:'barrio',l:'Barrio'},{f:'equip',l:'Tipo'}] },
 { id:'predios', nombre:'Predios', tabla:'predios_wgs84', color:'#6a1b9a', campos:['clave'] },
 { id:'limites', nombre:'Límites', tabla:'limites_wgs84', color:'#c62828', visible:false, campos:['sector','isla'] },
 { id:'islas', nombre:'Islas', tabla:'islas_wgs84', color:'#00838f', visible:false, campos:['txt'] },
