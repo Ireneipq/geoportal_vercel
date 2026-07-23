@@ -17,7 +17,7 @@
 - **Archivos:** `script.js`
 - Color: `#1565c0` (azul) → `#ff6347` (tomate)
 - Línea: sólida → entrecortada (`dashArray: '8, 6'`), peso 1.5 (delgada)
-- Popup: solo campo `dpa_nombre_1` (Nombre)
+- Popup: campo `dpa_nomb_1` (Nombre) — corregido nombre real del campo en Supabase
 - Leyenda: punto circular → segmento de línea SVG entrecortada
 - Orden CONFIG: movida al inicio para que cargue última en Leaflet (encima de todas las capas)
 - **Zoom mínimo:** solo visible a zoom ≥ 17 (escala ≈ 1:1.000). Se oculta automáticamente al alejar.
