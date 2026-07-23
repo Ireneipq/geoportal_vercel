@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: cambios no commiteados (vías delgada + zoom mínimo 18)
+## Estado actual: commit d9e9230 — Todas las capas cargan correctamente
 
 ---
 
