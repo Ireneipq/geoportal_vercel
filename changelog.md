@@ -1,6 +1,29 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit 54899f6
+## Estado actual: cambios no commiteados (loadLayer mejorado + vias estilo + orden capas + warning filter + diagnóstico)
+
+---
+
+## 2026-07-22
+
+### Fix: loadLayer - detección de geometría y diagnóstico
+- **Archivos:** `script.js`, `changelog.md`
+- **Problema:** Solo buscaba `geom` o `geometry`. Capas como vías/predios/límites/islas fallaban silenciosamente.
+- **Solución:** Detección ampliada con lista extendida + auto-detección por forma GeoJSON + regex fallback para strings corruptos.
+- Logs de diagnóstico en consola (F12): filas cargadas, geom válidas, sin geom.
+- Resumen de carga por capa al iniciar el geoportal.
+
+### Capa Vías - Estilo, popup y orden
+- **Archivos:** `script.js`
+- Color: `#1565c0` (azul) → `#ff6347` (tomate)
+- Línea: sólida → entrecortada (`dashArray: '8, 6'`)
+- Popup: solo campo `dpa_nombre_1` (Nombre)
+- Leyenda: punto circular → segmento de línea SVG entrecortada
+- Orden CONFIG: movida al inicio para que cargue última en Leaflet (encima de todas las capas)
+
+### Fix: silenciar warnings Leaflet deprecated
+- **Archivos:** `index.html`
+- `Object.defineProperty` en `MouseEvent.prototype` para `mozPressure` y `mozInputSource`, evitando que Firefox dispare la advertencia de deprecated al Leaflet accederlas.
 
 ---
 

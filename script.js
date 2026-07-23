@@ -1,6 +1,6 @@
 const CONFIG = [
+{ id:'vias', nombre:'Vías', tabla:'vias_WGS84', color:'#ff6347', campos:[{f:'dpa_nombre_1',l:'Nombre'}] },
 { id:'arboles', nombre:'Árboles', tabla:'arboles_wgs84', color:'#2e7d32', campos:[{f:'codigo',l:'Código'},{f:'familia',l:'Familia'},{f:'genero',l:'Género'},{f:'especie',l:'Especie',i:true},{f:'n_comun',l:'Nombre común'}] },
-{ id:'vias', nombre:'Vías', tabla:'vias_WGS84', color:'#1565c0', campos:[{f:'dpa_nombre_1',l:'Nombre'},{f:'tipo_de_ro',l:'Tipo de rodadura'},{f:'Ciclovia',l:'Ciclovía'},{f:'sentido',l:'Sentido'}] },
 { id:'equipamientos', nombre:'Equipamientos', tabla:'equipamientos_wgs84', color:'#e65100', campos:[{f:'uso_real',l:'Uso real'},{f:'equip',l:'Equip'},{f:'barrio',l:'Barrio'}] },
 { id:'predios', nombre:'Predios', tabla:'predios_wgs84', color:'#6a1b9a', campos:['clave'] },
 { id:'limites', nombre:'Límites', tabla:'limites_wgs84', color:'#c62828', campos:['sector','isla'] },
@@ -39,6 +39,7 @@ const div = L.DomUtil.create('div', 'map-legend');
 let html = '<div class="legend-title">Leyenda</div>';
 for (const cfg of CONFIG) {
 let icon = `<span class="legend-dot" style="background:${cfg.color}"></span>`;
+if (cfg.id === 'vias') icon = `<svg width="20" height="14" style="vertical-align:middle"><line x1="0" y1="7" x2="20" y2="7" stroke="${cfg.color}" stroke-width="3" stroke-dasharray="6,4"/></svg>`;
 if (cfg.id === 'encuestas') icon = '<i class="fas fa-location-dot" style="font-size:14px;color:#d4a017"></i>';
 html += `<div class="legend-item">${icon}<span>${cfg.nombre}</span></div>`;
 }
@@ -77,17 +78,42 @@ return html;
 
 async function loadLayer(cfg) {
 const data = await fetchAllRows(cfg.tabla);
-const features = [];
-for (const row of data) {
-let geom = row.geom || row.geometry;
-if (typeof geom === 'string') { try { geom = JSON.parse(geom); } catch(e) {} }
-if (geom && geom.type) {
-features.push({ type:'Feature', properties:row, geometry:geom });
+if (data.length > 0) {
+console.log(`[${cfg.nombre}] Campos disponibles:`, Object.keys(data[0]).join(', '));
 }
+const features = [];
+let skipped = 0;
+const GEOM_KEYS = ['geom','geometry','wkb_geometry','the_geom','geom_column','st_asgeojson','shape','geom_webmercator'];
+for (const row of data) {
+let geom = null;
+for (const k of GEOM_KEYS) {
+if (row[k]) { geom = row[k]; break; }
+}
+if (!geom) {
+for (const [k, v] of Object.entries(row)) {
+if (k === 'id' || k === 'created_at') continue;
+if (typeof v === 'object' && v !== null && v.type && (v.coordinates || v.geometries)) { geom = v; break; }
+}
+}
+if (typeof geom === 'string') {
+try { geom = JSON.parse(geom); } catch(e) {
+const m = geom.match(/\{[\s\S]*"type"\s*:\s*"(?:Point|LineString|Polygon|MultiPoint|MultiLineString|MultiPolygon|GeometryCollection)"[\s\S]*\}/);
+if (m) try { geom = JSON.parse(m[0]); } catch(e2) {}
+}
+}
+if (geom && geom.type && (geom.coordinates || geom.geometries)) {
+features.push({ type:'Feature', properties:row, geometry:geom });
+} else {
+skipped++;
+}
+}
+console.log(`[${cfg.nombre}] Filas: ${data.length}, Geom válidas: ${features.length}, Sin geom: ${skipped}`);
+if (features.length === 0 && data.length > 0) {
+console.warn(`[${cfg.nombre}] Primera fila (sin geom detectada):`, JSON.stringify(data[0]).substring(0, 500));
 }
 if (features.length === 0) return null;
 const geoLayer = L.geoJSON({ type:'FeatureCollection', features }, {
-style: { color: cfg.color, weight: cfg.id === 'vias' ? 3 : 2, fillOpacity: 0.25, opacity: cfg.id === 'vias' ? 0.9 : 0.8 },
+style: { color: cfg.color, weight: cfg.id === 'vias' ? 3 : 2, fillOpacity: cfg.id === 'vias' ? 0 : 0.25, opacity: cfg.id === 'vias' ? 0.9 : 0.8, dashArray: cfg.id === 'vias' ? '8, 6' : undefined },
 pointToLayer: (feature, latlng) => {
 if (cfg.id === 'encuestas') {
 return L.marker(latlng, { icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="font-size:22px;color:#d4a017;text-shadow:0 1px 3px rgba(0,0,0,.4)"></i>', iconSize: [22, 22], iconAnchor: [11, 22], popupAnchor: [0, -22] }) });
@@ -166,6 +192,7 @@ if (dot) dot.classList.add('loading');
 const grupo = L.featureGroup();
 let anyLayer = false;
 const loadOrder = [...CONFIG].reverse();
+const resultados = [];
 for (const cfg of loadOrder) {
 try {
 if (statusText) statusText.textContent = `Cargando ${cfg.nombre}...`;
@@ -174,9 +201,14 @@ if (layer) {
 layerMap[cfg.id] = layer;
 const chk = document.getElementById('chk-' + cfg.id);
 if (chk && chk.checked) { map.addLayer(layer); layer.eachLayer(l => grupo.addLayer(l)); anyLayer = true; }
+resultados.push(`${cfg.nombre}: OK`);
+} else {
+resultados.push(`${cfg.nombre}: SIN GEOMETRÍA`);
 }
-} catch (e) { console.error('Error en ' + cfg.nombre, e); }
+} catch (e) { console.error('Error en ' + cfg.nombre, e); resultados.push(`${cfg.nombre}: ERROR - ${e.message}`); }
 }
+console.log('=== Resumen de carga de capas ===');
+resultados.forEach(r => console.log('  ' + r));
 if (anyLayer && grupo.getLayers().length > 0) map.fitBounds(grupo.getBounds().pad(0.05));
 if (statusText) statusText.textContent = 'Listo';
 updateStats();

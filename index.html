@@ -37,6 +37,12 @@ UTPL 2026 &middot; Especialidad SIG &middot; Mapa: OpenStreetMap / Esri</div>
 </aside>
 <main class="map-area"><div id="map"></div></main>
 </div>
+<script>
+try{
+Object.defineProperty(MouseEvent.prototype,'mozPressure',{get:function(){return undefined},configurable:true});
+Object.defineProperty(MouseEvent.prototype,'mozInputSource',{get:function(){return undefined},configurable:true});
+}catch(e){}
+</script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
