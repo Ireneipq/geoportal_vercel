@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: cambios no commiteados (loadLayer mejorado + vias estilo + orden capas + warning filter + diagnóstico)
+## Estado actual: commit ef4a22a (pendiente: RLS en Supabase)
 
 ---
 
@@ -59,9 +59,15 @@
 - Repositorio: `https://github.com/Ireneipq/geoportal_vercel`
 - Variables de entorno Vercel: `SUPABASE_URL`, `SUPABASE_KEY`
 
+### Diagnóstico: capas sin datos (0 filas)
+- **Tablas afectadas:** `vias_WGS84`, `predios_wgs84`, `limites_wgs84`, `islas_wgs84`
+- **Causa:** RLS (Row Level Security) activado en Supabase sin política de SELECT para el rol `anon`.
+- **Solución aplicada en Supabase:** Habilitar RLS + crear política de SELECT anónimo para las 4 tablas.
+- **Verificar:** Recargar el geoportal y comprobar que estadísticas muestra 7 capas activas.
+
 ---
 
 ## Notas pendientes
 
-- Las capas vias, predios, limites e islas pueden no verse. Revisar en consola (F12) los logs de `loadLayer` para diagnosticar si Supabase devuelve 0 filas o si el campo de geometria tiene nombre distinto (`geom`, `geometry`, `wkb_geometry`, `the_geom`).
+- **Completar:** Crear política RLS en Supabase para `vias_WGS84`, `predios_wgs84`, `limites_wgs84`, `islas_wgs84`.
 - No hay archivo `.env` local. Las credenciales de Supabase se configuran en Vercel.
