@@ -4,7 +4,7 @@ const CONFIG = [
 { id:'equipamientos', nombre:'Equipamientos', tabla:'equipamientos_wgs84', color:'#e65100', visible:false, campos:[{f:'uso_actual',l:'Uso actual'},{f:'barrio',l:'Barrio'},{f:'equip',l:'Tipo'}] },
 { id:'predios', nombre:'Predios', tabla:'predios_wgs84', color:'#6a1b9a', campos:['clave'] },
 { id:'limites', nombre:'Límites', tabla:'limites_wgs84', color:'#c62828', visible:false, campos:['sector','isla'] },
-{ id:'islas', nombre:'Islas', tabla:'islas_wgs84', color:'#00838f', visible:false, campos:['txt'] },
+{ id:'islas', nombre:'Islas', tabla:'islas_wgs84', color:'#f9a825', visible:false, campos:['txt'] },
 { id:'encuestas', nombre:'Encuestas', tabla:'encuesta_arbolado', color:'#d4a017', visible:false, campos:[{f:'valoracion',l:'Valoración'},{f:'comentario',l:'Comentario'},{f:'nombre',l:'Encuestado'},{f:'created_at',l:'Fecha'}] }
 ];
 
@@ -145,8 +145,9 @@ if (features.length === 0) return null;
 const geoLayer = L.geoJSON({ type:'FeatureCollection', features }, {
 style: function(feature) {
 const isEquip = cfg.id === 'equipamientos';
+const isOutline = cfg.id === 'limites' || cfg.id === 'islas';
 const fillColor = isEquip ? (EQUIP_COLORS[feature.properties.equip] || EQUIP_DEFAULT) : cfg.color;
-return { color: fillColor, weight: cfg.id === 'vias' ? 1.5 : 2, fillColor: fillColor, fillOpacity: isEquip ? 0.7 : (cfg.id === 'vias' ? 0 : 0.25), opacity: isEquip ? 0.9 : (cfg.id === 'vias' ? 0.9 : 0.8), dashArray: cfg.id === 'vias' ? '8, 6' : undefined };
+return { color: fillColor, weight: cfg.id === 'vias' ? 1.5 : (isOutline ? 2 : 2), fillColor: fillColor, fillOpacity: isEquip ? 0.7 : (cfg.id === 'vias' || isOutline ? 0 : 0.25), opacity: isEquip ? 0.9 : 0.8, dashArray: cfg.id === 'vias' ? '8, 6' : undefined };
 },
 pointToLayer: (feature, latlng) => {
 if (cfg.id === 'encuestas') {
