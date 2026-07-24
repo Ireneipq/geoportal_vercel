@@ -53,12 +53,14 @@ const tipos = new Set();
 layerMap['equipamientos'].eachLayer(l => { if (l.feature && l.feature.properties.equip) tipos.add(l.feature.properties.equip); });
 [...tipos].sort((a, b) => a.localeCompare(b, 'es')).forEach(t => {
 const c = EQUIP_COLORS[t] || EQUIP_DEFAULT;
-html += `<div class="legend-item"><span class="legend-dot" style="background:${c}"></span><span>${t}</span></div>`;
+html += `<div class="legend-item"><svg width="14" height="12" viewBox="0 0 14 12"><polygon points="1,1 13,1 13,11 1,11" fill="${c}" opacity="0.8"/></svg><span>${t}</span></div>`;
 });
 } else {
-let icon = `<span class="legend-dot" style="background:${cfg.color}"></span>`;
-if (cfg.id === 'vias') icon = `<svg width="20" height="14" style="vertical-align:middle"><line x1="0" y1="7" x2="20" y2="7" stroke="${cfg.color}" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`;
-if (cfg.id === 'encuestas') icon = '<i class="fas fa-location-dot" style="font-size:14px;color:#d4a017"></i>';
+let icon = '';
+if (cfg.id === 'arboles') icon = '<svg width="12" height="14" viewBox="0 0 12 14"><polygon points="6,0 12,14 0,14" fill="#2e7d32"/></svg>';
+else if (cfg.id === 'vias') icon = `<svg width="20" height="14" style="vertical-align:middle"><line x1="0" y1="7" x2="20" y2="7" stroke="${cfg.color}" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`;
+else if (cfg.id === 'encuestas') icon = '<i class="fas fa-location-dot" style="font-size:14px;color:#d4a017"></i>';
+else icon = `<svg width="14" height="12" viewBox="0 0 14 12"><polygon points="1,1 13,1 13,11 1,11" fill="${cfg.color}" opacity="0.6" stroke="${cfg.color}" stroke-width="1"/></svg>`;
 html += `<div class="legend-item">${icon}<span>${cfg.nombre}</span></div>`;
 }
 }
