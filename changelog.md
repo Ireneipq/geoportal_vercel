@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit 19f6d2d (sidebar profesional, triangulos arboles, leyenda SVG)
+## Estado actual: commit dfd4547 (limites/islas contour, predios gris discreto)
 
 ---
 
@@ -85,6 +85,24 @@
 - Cada capa muestra en la leyenda su forma real del mapa
 - Árboles: triángulo verde | Vías: línea punteada | Equipamientos: rectángulo con color por tipo
 - Predios/Límites/Islas: rectángulo con color de la capa | Encuestas: pin de ubicación
+
+### Capa Límites - Contorno rojo sin relleno
+- **Archivos:** `script.js`
+- Color: `#c62828` (rojo), fillOpacity: 0 (solo contorno)
+- Weight: 2px
+- Leyenda: rectángulo sin relleno borde rojo
+
+### Capa Islas - Contorno amarillo sin relleno
+- **Archivos:** `script.js`
+- Color: `#f9a825` (amarillo), fillOpacity: 0 (solo contorno)
+- Weight: 2px
+- Leyenda: rectángulo sin relleno borde amarillo
+
+### Capa Predios - Estilo discreto base de mapa
+- **Archivos:** `script.js`
+- **Antes:** púrpura `#6a1b9a`, weight 2, fillOpacity 0.25, opacity 0.8
+- **Ahora:** gris `#9e9e9e`, weight 0.8 (delgado), fillOpacity 0.15, opacity 0.5
+- Diseñado como capa base que no compite con otras capas
 
 ---
 
