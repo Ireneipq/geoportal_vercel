@@ -2,7 +2,7 @@ const CONFIG = [
 { id:'vias', nombre:'Vías', tabla:'vias_WGS84', color:'#ff6347', visible:false, campos:[{f:'dpa_nomb_1',l:'Nombre'}] },
 { id:'arboles', nombre:'Árboles', tabla:'arboles_wgs84', color:'#2e7d32', campos:[{f:'codigo',l:'Código'},{f:'familia',l:'Familia'},{f:'genero',l:'Género'},{f:'especie',l:'Especie',i:true},{f:'n_comun',l:'Nombre común'}] },
 { id:'equipamientos', nombre:'Equipamientos', tabla:'equipamientos_wgs84', color:'#e65100', visible:false, campos:[{f:'uso_actual',l:'Uso actual'},{f:'barrio',l:'Barrio'},{f:'equip',l:'Tipo'}] },
-{ id:'predios', nombre:'Predios', tabla:'predios_wgs84', color:'#6a1b9a', campos:['clave'] },
+{ id:'predios', nombre:'Predios', tabla:'predios_wgs84', color:'#9e9e9e', campos:['clave'] },
 { id:'limites', nombre:'Límites', tabla:'limites_wgs84', color:'#c62828', visible:false, campos:['sector','isla'] },
 { id:'islas', nombre:'Islas', tabla:'islas_wgs84', color:'#f9a825', visible:false, campos:['txt'] },
 { id:'encuestas', nombre:'Encuestas', tabla:'encuesta_arbolado', color:'#d4a017', visible:false, campos:[{f:'valoracion',l:'Valoración'},{f:'comentario',l:'Comentario'},{f:'nombre',l:'Encuestado'},{f:'created_at',l:'Fecha'}] }
@@ -147,8 +147,9 @@ const geoLayer = L.geoJSON({ type:'FeatureCollection', features }, {
 style: function(feature) {
 const isEquip = cfg.id === 'equipamientos';
 const isOutline = cfg.id === 'limites' || cfg.id === 'islas';
+const isPredios = cfg.id === 'predios';
 const fillColor = isEquip ? (EQUIP_COLORS[feature.properties.equip] || EQUIP_DEFAULT) : cfg.color;
-return { color: fillColor, weight: cfg.id === 'vias' ? 1.5 : (isOutline ? 2 : 2), fillColor: fillColor, fillOpacity: isEquip ? 0.7 : (cfg.id === 'vias' || isOutline ? 0 : 0.25), opacity: isEquip ? 0.9 : 0.8, dashArray: cfg.id === 'vias' ? '8, 6' : undefined };
+return { color: fillColor, weight: isPredios ? 0.8 : (cfg.id === 'vias' ? 1.5 : (isOutline ? 2 : 2)), fillColor: fillColor, fillOpacity: isEquip ? 0.7 : (cfg.id === 'vias' || isOutline ? 0 : (isPredios ? 0.15 : 0.25)), opacity: isEquip ? 0.9 : (isPredios ? 0.5 : 0.8), dashArray: cfg.id === 'vias' ? '8, 6' : undefined };
 },
 pointToLayer: (feature, latlng) => {
 if (cfg.id === 'encuestas') {
