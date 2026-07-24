@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit 74d1178 (UI capas, leyenda, popups y colores equipamientos)
+## Estado actual: commit 19f6d2d (sidebar profesional, triangulos arboles, leyenda SVG)
 
 ---
 
@@ -45,6 +45,46 @@
 - **Corregido:** "SEGURIDAD Y DEFENSA" → "Seguridad" (nombre real en DB)
 - Keys del diccionario ahora coinciden con valores exactos de la DB
 - Paleta: Violeta, Azul claro, Azul oscuro, Amarillo, Rojo-naranja, Púrpura, Gris oscuro, Verde azulado, Rosa, Cian
+
+### Equipamientos - Colores más distinguibles
+- **Archivos:** `script.js`
+- Paleta recalibrada para máxima diferenciación visual entre tipos
+- Institucional(violeta), Servicio(azul oscuro), Educativo(verde bosque), Financiero(ámbar), Seguridad(rojo), Culto(magenta), Administrativo(gris azulado), Salud(verde oscuro), Recreativo(naranja), Turistico(índigo)
+
+### Sidebar - Rediseño compacto y profesional
+- **Archivos:** `styles.css`, `index.html`
+- Ancho reducido 320px → 280px, padding 20px → 12px, gap 18px → 12px
+- Títulos de sección más pequeños (.62rem)
+- Capas más compactas (padding 7px 10px, fuente .78rem)
+- Toggle switches más pequeños (32x18px)
+- Estadísticas compactas (padding 4px, fuente .75rem)
+- Botones Participa con clases CSS (.btn-action, .btn-green, .btn-red) en vez de estilos inline
+- Thumbnails de mapa base más compactos (altura fija 52px)
+- Footer más reducido
+
+### Sidebar - Fondo gradiente
+- **Archivos:** `styles.css`
+- Fondo gradiente de #f7f8fa a #eef1f5, combina con tono del header
+- Capas con fondo semitransparente blanco (rgba(255,255,255,.6))
+- Estadísticas con mismo tratamiento semitransparente
+- Separadores sutiles con rgba(0,0,0,.06)
+
+### Botón PDF eliminado
+- **Archivos:** `index.html`
+- Eliminado botón "Generar PDF encuestas" del sidebar
+
+### Árboles - Triángulos SVG en mapa
+- **Archivos:** `script.js`
+- **Antes:** circleMarker verde con radio 7
+- **Ahora:** Triángulo SVG (12x14px) verde bosque #2e7d32
+- Sin borde blanco, solo relleno sólido
+- Anclaje en base para que apunte hacia arriba
+
+### Leyenda - Iconos SVG según forma geometrica
+- **Archivos:** `script.js`
+- Cada capa muestra en la leyenda su forma real del mapa
+- Árboles: triángulo verde | Vías: línea punteada | Equipamientos: rectángulo con color por tipo
+- Predios/Límites/Islas: rectángulo con color de la capa | Encuestas: pin de ubicación
 
 ---
 
@@ -135,4 +175,4 @@
 ## Notas pendientes
 
 - No hay archivo `.env` local. Las credenciales de Supabase se configuran en Vercel.
-- Próximo paso pendiente: trabajar en la representación gráfica de cada especie de árbol con icono diferente según la especie.
+- Próximo paso pendiente: icono diferente por especie de árbol (actualmente todos son triángulos verdes iguales).
