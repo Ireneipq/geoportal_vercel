@@ -25,13 +25,13 @@ thumbnail:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/Ma
 
 const map = L.map('map', { zoomControl: true, zoom: 14, center: [-0.7432, -90.3038] });
 
-let currentBasemap = 'satellite';
+let currentBasemap = 'standard';
 const tileLayers = {};
 
 for (const [key, bm] of Object.entries(BASEMAPS)) {
 tileLayers[key] = L.tileLayer(bm.url, { attribution: bm.attribution, maxZoom: 19 });
 }
-tileLayers['satellite'].addTo(map);
+tileLayers['standard'].addTo(map);
 
 const legend = L.control({ position: 'bottomright' });
 let legendDiv = null;
