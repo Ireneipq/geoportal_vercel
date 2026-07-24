@@ -61,6 +61,7 @@ if (cfg.id === 'arboles') icon = '<svg width="12" height="14" viewBox="0 0 12 14
 else if (cfg.id === 'vias') icon = `<svg width="20" height="14" style="vertical-align:middle"><line x1="0" y1="7" x2="20" y2="7" stroke="${cfg.color}" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`;
 else if (cfg.id === 'encuestas') icon = '<i class="fas fa-location-dot" style="font-size:14px;color:#d4a017"></i>';
 else if (cfg.id === 'limites' || cfg.id === 'islas') icon = `<svg width="14" height="12" viewBox="0 0 14 12"><rect x="1" y="1" width="12" height="10" fill="none" stroke="${cfg.color}" stroke-width="1.5"/></svg>`;
+else if (cfg.id === 'predios') icon = `<svg width="14" height="12" viewBox="0 0 14 12"><rect x="1" y="1" width="12" height="10" fill="${cfg.color}" fill-opacity="0.2" stroke="${cfg.color}" stroke-width="0.8"/></svg>`;
 else icon = `<svg width="14" height="12" viewBox="0 0 14 12"><polygon points="1,1 13,1 13,11 1,11" fill="${cfg.color}" opacity="0.6" stroke="${cfg.color}" stroke-width="1"/></svg>`;
 html += `<div class="legend-item">${icon}<span>${cfg.nombre}</span></div>`;
 }
