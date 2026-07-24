@@ -1,6 +1,6 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit dfd4547 (limites/islas contour, predios gris discreto)
+## Estado actual: commit 68c7a51 (sidebar compacto, equipamientos sin verde, mapa base estandar)
 
 ---
 
@@ -103,6 +103,30 @@
 - **Antes:** púrpura `#6a1b9a`, weight 2, fillOpacity 0.25, opacity 0.8
 - **Ahora:** gris `#9e9e9e`, weight 0.8 (delgado), fillOpacity 0.15, opacity 0.5
 - Diseñado como capa base que no compite con otras capas
+
+### Popup Islas - Campo nam
+- **Archivos:** `script.js`
+- Popup muestra solo campo `nam` (Nombre)
+- Eliminado campo `txt` del popup
+
+### Equipamientos - Sin colores verdes
+- **Archivos:** `script.js`
+- Educativo: `#2E7D32` (verde) → `#1565C0` (azul oscuro)
+- Salud: `#00695C` (verde azulado) → `#00838F` (cian)
+- Evita confusión con capa Árboles (verde)
+
+### Sidebar - Sin scrollbar, todo visible
+- **Archivos:** `styles.css`
+- `overflow-y:hidden` en `.sidebar-scroll`
+- Gap reducido 12px → 8px, padding 12px → 10px
+- Capas padding 5px, mapa base altura 44px
+- Botones padding 7px, footer más compacto
+
+### Mapa base - Estándar por defecto
+- **Archivos:** `script.js`
+- **Antes:** Satelital por defecto
+- **Ahora:** Estándar (OSM) por defecto
+- Ambas opciones siguen disponibles
 
 ---
 
