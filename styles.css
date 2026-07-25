@@ -172,9 +172,17 @@ textarea{resize:vertical;min-height:70px}
 .encuesta-page .section-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);padding-bottom:8px;border-bottom:2px solid rgba(91,155,213,.15);margin-bottom:4px;padding-left:10px;border-left:3px solid var(--accent)}
 .encuesta-page .form-group label{font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:2px}
 .encuesta-page input[type=text],.encuesta-page input[type=number],.encuesta-page textarea{padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:.84rem;transition:border-color .2s,box-shadow .2s}
-.encuesta-page .checkbox-grid{grid-template-columns:1fr 1fr;gap:8px}
-.encuesta-page .checkbox-item{padding:8px 12px;border-radius:8px;font-size:.8rem;border:1.5px solid var(--border);transition:all .2s}
-.encuesta-page .checkbox-item .checkmark{width:18px;height:18px;border-radius:5px}
+.encuesta-page .checkbox-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.encuesta-page .checkbox-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;font-size:.78rem;border:1.5px solid var(--border);transition:all .2s;min-height:42px}
+.encuesta-page .checkbox-item .checkbox-icon{width:20px;text-align:center;font-size:.82rem;color:var(--text-secondary);flex-shrink:0;transition:color .2s}
+.encuesta-page .checkbox-item:hover{border-color:var(--accent);background:#f0f7fe}
+.encuesta-page .checkbox-item:hover .checkbox-icon{color:var(--accent)}
+.encuesta-page .checkbox-item.checked{border-color:var(--accent);background:#f0f7fe}
+.encuesta-page .checkbox-item.checked .checkbox-icon{color:var(--accent)}
+.encuesta-page .checkbox-item .checkmark{width:18px;height:18px;border:2px solid #d1d5db;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.encuesta-page .checkbox-item .checkmark::after{content:"\2713";font-size:11px;color:#fff;font-weight:700;opacity:0;transition:opacity .15s}
+.encuesta-page .checkbox-item input:checked+.checkmark{background:var(--accent);border-color:var(--accent)}
+.encuesta-page .checkbox-item input:checked+.checkmark::after{opacity:1}
 .encuesta-page .rating-group{gap:8px}
 .encuesta-page .rating-btn{padding:10px 8px;border-radius:10px;font-size:.88rem;border:1.5px solid var(--border);transition:all .2s}
 .encuesta-page .rating-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 2px 8px rgba(15,43,61,.25)}
