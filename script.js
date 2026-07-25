@@ -150,7 +150,7 @@ const isEquip = cfg.id === 'equipamientos';
 const isOutline = cfg.id === 'limites' || cfg.id === 'islas';
 const isPredios = cfg.id === 'predios';
 const fillColor = isEquip ? (EQUIP_COLORS[feature.properties.equip] || EQUIP_DEFAULT) : cfg.color;
-return { color: fillColor, weight: isPredios ? 0.8 : (cfg.id === 'vias' ? 1.5 : (isOutline ? 2 : 2)), fillColor: fillColor, fillOpacity: isEquip ? 0.7 : (cfg.id === 'vias' || isOutline ? 0 : (isPredios ? 0.15 : 0.25)), opacity: isEquip ? 0.9 : (isPredios ? 0.5 : 0.8), dashArray: cfg.id === 'vias' ? '8, 6' : undefined };
+return { color: fillColor, weight: isPredios ? 0.8 : (cfg.id === 'vias' ? 3.5 : (isOutline ? 2 : 2)), fillColor: fillColor, fillOpacity: isEquip ? 0.7 : (cfg.id === 'vias' || isOutline ? 0 : (isPredios ? 0.15 : 0.25)), opacity: isEquip ? 0.9 : (isPredios ? 0.5 : 0.9), dashArray: cfg.id === 'vias' ? '10, 6' : undefined, lineCap: cfg.id === 'vias' ? 'round' : undefined };
 },
 pointToLayer: (feature, latlng) => {
 if (cfg.id === 'encuestas') {
@@ -161,7 +161,13 @@ return L.marker(latlng, { icon: L.divIcon({ className: '', html: '<svg width="12
 }
 return L.circleMarker(latlng, { radius: 5, fillColor: cfg.color, color: '#fff', weight: 1.5, fillOpacity: 0.85 });
 },
-onEachFeature: (feature, layer) => layer.bindPopup(buildPopup(feature, cfg))
+onEachFeature: (feature, layer) => {
+layer.bindPopup(buildPopup(feature, cfg));
+if (cfg.id === 'vias') {
+layer.on('mouseover', function() { this.setStyle({ weight: 6, opacity: 1, dashArray: '' }); this.bringToFront(); });
+layer.on('mouseout', function() { this.setStyle({ weight: 3.5, opacity: 0.9, dashArray: '10, 6' }); });
+}
+}
 });
 featureCounts[cfg.id] = features.length;
 return geoLayer;
@@ -258,12 +264,12 @@ updateLegend();
 if (layerMap['vias']) {
 const chkVias = document.getElementById('chk-vias');
 if (chkVias && chkVias.checked) {
-if (map.getZoom() < 17) map.removeLayer(layerMap['vias']);
+if (map.getZoom() < 15) map.removeLayer(layerMap['vias']);
 }
 map.on('zoomend', function() {
 const chk = document.getElementById('chk-vias');
 if (!chk || !chk.checked || !layerMap['vias']) return;
-if (map.getZoom() >= 17) {
+if (map.getZoom() >= 15) {
 if (!map.hasLayer(layerMap['vias'])) map.addLayer(layerMap['vias']);
 } else {
 if (map.hasLayer(layerMap['vias'])) map.removeLayer(layerMap['vias']);
