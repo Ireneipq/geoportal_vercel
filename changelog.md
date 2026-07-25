@@ -1,6 +1,37 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit 68c7a51 (sidebar compacto, equipamientos sin verde, mapa base estandar)
+## Estado actual: commit 78856e2 (encuesta profesional, sidebar 340px, checkboxes con iconos)
+
+---
+
+## 2026-07-25
+
+### Encuesta - Scroll en formulario
+- **Archivos:** `styles.css`, `encuesta.html`
+- Agregado `class="encuesta-page"` al body para estilos diferenciados
+- `.encuesta-page .sidebar-scroll` con `overflow-y:auto` para permitir desplazamiento
+- Scrollbar sutil de 4px con tono transparente
+
+### Encuesta - Panel profesional y proporcionado
+- **Archivos:** `styles.css`
+- Sidebar ampliado: 280px → 340px
+- Secciones tipo tarjeta: fondo blanco, sombra sutil (`box-shadow: 0 1px 4px rgba(0,0,0,.06)`), bordes redondeados 10px
+- Títulos de sección mejorados: color accent, borde lateral izquierdo 3px, fuente .72rem
+- Inputs con padding 10px 14px, bordes más suaves
+- Rating con bordes 10px, sombra al activar (`box-shadow: 0 2px 8px rgba(15,43,61,.25)`)
+- Botón enviar más grande, sombra prominente, mejor hover
+- Hint en cursiva, fuente .7rem
+- Textarea min-height 80px
+- Gap general 12px entre secciones
+
+### Encuesta - Checkboxes con iconos y proporción uniforme
+- **Archivos:** `encuesta.html`, `styles.css`
+- Iconos FontAwesome en cada opción: seedling, tree, bolt, road, shield-alt, arrows-alt-v
+- Altura uniforme: `min-height: 42px` en cada checkbox
+- Grid 2 columnas con gap 8px
+- Hover: icono cambia a color accent
+- Checkmark redondeado 5px
+- Estado checked: fondo `#f0f7fe`, borde accent
 
 ---
 
