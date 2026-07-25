@@ -1,10 +1,20 @@
 # Changelog - Geoportal Inventario Arboreo
 
-## Estado actual: commit 78856e2 (encuesta profesional, sidebar 340px, checkboxes con iconos)
+## Estado actual: commit 93d3124 (vías mejoradas, hover resaltado, encuesta profesional)
 
 ---
 
 ## 2026-07-25
+
+### Capa Vías - Visibilidad y hover mejorados
+- **Archivos:** `script.js`
+- **Problema:** líneas demasiado delgadas (1.5px), difíciles de seleccionar con el mouse
+- **Grosor:** 1.5px → 3.5px, opacidad 0.8 → 0.9
+- **DashArray:** '8, 6' → '10, 6' (trazos más largos)
+- **LineCap:** agregado `round` para extremos redondeados
+- **Hover:** al pasar mouse → peso 6px, opacidad 1, sin dashArray (línea sólida), bringToFront
+- **Mouseout:** restaura estilo original
+- **Zoom mínimo:** 17 → 15 (visible antes al acercar)
 
 ### Encuesta - Scroll en formulario
 - **Archivos:** `styles.css`, `encuesta.html`
