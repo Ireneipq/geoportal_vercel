@@ -164,6 +164,10 @@ textarea{resize:vertical;min-height:70px}
 .marker-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);padding:8px 16px;border-radius:var(--radius-sm);box-shadow:0 4px 12px rgba(0,0,0,.15);font-size:.82rem;z-index:1000;display:none;white-space:nowrap;pointer-events:none}
 .marker-label.visible{display:block}
 
+.encuesta-page .sidebar-scroll{overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+.encuesta-page .sidebar-scroll::-webkit-scrollbar{display:block;width:4px}
+.encuesta-page .sidebar-scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px}
+
 @media(max-width:900px){
 header{padding:0 16px;height:56px}
 header h1{font-size:.95rem}
